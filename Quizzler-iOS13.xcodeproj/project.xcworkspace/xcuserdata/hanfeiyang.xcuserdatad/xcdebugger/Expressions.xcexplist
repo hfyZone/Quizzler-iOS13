@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ViewController.updateUI():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "questionNumber">
+            </PersistentString>
+            <PersistentString
+               value = "quiz.count">
+            </PersistentString>
+            <PersistentString
+               value = "Float(questionNumber) / Float(quiz.count)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
