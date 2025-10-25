@@ -15,59 +15,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var falseButton: UIButton!
     
-
-    let quiz = [
-        Question(q: "A slug's blood is green.", a: "True"),
-        Question(
-            q: "Approximately one quarter of human bones are in the feet.",
-            a: "True"
-        ),
-        Question(
-            q:
-                "The total surface area of two human lungs is approximately 70 square metres.",
-            a: "True"
-        ),
-        Question(
-            q:
-                "In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.",
-            a: "True"
-        ),
-        Question(
-            q:
-                "In London, UK, if you happen to die in the House of Parliament, you are technically entitled to a state funeral, because the building is considered too sacred a place.",
-            a: "False"
-        ),
-        Question(
-            q: "It is illegal to pee in the Ocean in Portugal.",
-            a: "True"
-        ),
-        Question(
-            q: "You can lead a cow down stairs but not up stairs.",
-            a: "False"
-        ),
-        Question(q: "Google was originally called 'Backrub'.", a: "True"),
-        Question(
-            q: "Buzz Aldrin's mother's maiden name was 'Moon'.",
-            a: "True"
-        ),
-        Question(
-            q:
-                "The loudest sound produced by any animal is 188 decibels. That animal is the African Elephant.",
-            a: "False"
-        ),
-        Question(
-            q:
-                "No piece of square dry paper can be folded in half more than 7 times.",
-            a: "False"
-        ),
-        Question(
-            q:
-                "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.",
-            a: "True"
-        ),
-
-    ]
-    var questionNumber = 0
+    @IBOutlet weak var scoreLabel: UILabel!
+    var quizBrain = QuizBrain()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,13 +28,12 @@ class ViewController: UIViewController {
 
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         let userAnswer = sender.currentTitle!
-        let actualAnswer = quiz[questionNumber].answer
-        if userAnswer == actualAnswer {
+        if quizBrain.checkAnswer(userAnswer) {
             sender.backgroundColor = UIColor.green
         } else {
             sender.backgroundColor = UIColor.red
         }
-        questionNumber = (questionNumber + 1) % quiz.count
+        quizBrain.nextQuestion()
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false){
             [weak self] timer in
             guard let self else {
@@ -95,10 +45,11 @@ class ViewController: UIViewController {
     }
 
     func updateUI() {
-        questionLable.text = quiz[questionNumber].text
+        questionLable.text = quizBrain.getQuestionText()
         trueButton.backgroundColor = UIColor.clear
         falseButton.backgroundColor = UIColor.clear
-        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
+        scoreLabel.text = "Socre:\(quizBrain.getScore())"
+        progressBar.progress = quizBrain.getProcess()
         print(progressBar.progress)
     }
 
